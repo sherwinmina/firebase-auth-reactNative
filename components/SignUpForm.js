@@ -10,8 +10,12 @@ class SignUpForm extends Component {
   state = { phone: '' };
 
   handleSubmit = async () => {
-    await axios.post(`${ROOT_URL}/createUser`, { phone: this.state.phone })
-    await axios.post( `${ROOT_URL}/requestOneTimePassword`, { phone: this.state.phone });
+    try {
+      await axios.post(`${ROOT_URL}/createUser`, { phone: this.state.phone })
+      await axios.post( `${ROOT_URL}/requestOneTimePassword`, { phone: this.state.phone });
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   render () {
@@ -23,8 +27,8 @@ class SignUpForm extends Component {
             value={this.state.phone}
             onChangeText={phone => this.setState({ phone })}
           />
-          <Button onPress={this.handleSubmit} title="Submit" />
         </View>
+         <Button onPress={this.handleSubmit} title="Submit" />
       </View>
     )
   }
